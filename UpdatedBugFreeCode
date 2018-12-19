@@ -1,0 +1,60 @@
+from IO import *
+
+def dDate(rawDate):
+    dSeg = []
+    fDate = ""
+    if "/" in rawDate:
+        dSeg = rawDate.split("/")
+    elif "-" in rawDate:
+        dSeg = rawDate.split("-")
+    else:
+        # error
+        return -1
+
+    if len(dSeg) == 3:
+        if not len(dSeg[1]) == 2:
+            dSeg[0] = "0" + dSeg[0]
+
+        if not len(dSeg[0]) == 2:
+            dSeg[1] = "0" + dSeg[1]
+
+        if not len(dSeg[2]) == 4:
+            dSeg[2] = "20" + dSeg[2]
+
+        fDate = dSeg[0] + dSeg[1] + dSeg[2]
+        try:
+            int(fDate)
+        except ValueError:
+            # error
+            return -1
+    else:
+        # error
+        return -1
+
+    if not(1 <= int(dSeg[1]) <= 31):
+        #error
+        return -1
+    if not(1 <= int(dSeg[0]) <= 12):
+        #error
+        return -1
+    if not(2000 <= int(dSeg[2])):
+        #error
+        return -1
+
+    return fDate
+
+
+stop = False
+while not stop:
+    date = ""
+    # read line
+    currLine = readLine()
+
+    if currLine == "stop":
+        stop = True
+    else:
+        date = dDate(currLine)
+    if date == -1:
+       print("Re-enter your date plz mm-dd-yyyy")
+    else:
+        print(date)
